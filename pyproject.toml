@@ -1,0 +1,11 @@
+[project]
+name = "src"
+version = "0.0.1"
+description = "MLOps pipeline for fraud detection system"
+authors = [{name = "Upanya Chennoju", email = "upanyachennoju@gmail.com"}]
+
+[tool.setuptools]
+packages = {find = {}}
+
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements.txt"}

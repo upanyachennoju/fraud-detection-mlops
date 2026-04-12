@@ -1,0 +1,58 @@
+raw_data_schema:
+  required_columns:
+    - TransactionID
+    - AccountID
+    - TransactionAmount
+    - TransactionDate
+    - TransactionType
+    - Location
+    - DeviceID
+    - IP Address
+    - MerchantID
+    - Channel
+    - CustomerAge
+    - CustomerOccupation
+    - TransactionDuration
+    - LoginAttempts
+    - AccountBalance
+    - PreviousTransactionDate
+
+  numerical_columns:
+    - TransactionAmount
+    - CustomerAge
+    - TransactionDuration
+    - LoginAttempts
+    - AccountBalance
+
+  categorical_columns:
+    - TransactionType
+    - Location
+    - Channel
+    - CustomerOccupation
+    - MerchantID
+    
+processed_data_schema:
+  required_columns:
+    - TransactionAmount
+    - CustomerAge
+    - TransactionDuration
+    - LoginAttempts
+    - AccountBalance
+    - year
+    - month
+    - day
+    - hour
+
+  numerical_columns:
+    - TransactionAmount
+    - CustomerAge
+    - TransactionDuration
+    - LoginAttempts
+    - AccountBalance
+    - year
+    - month
+    - day
+    - hour
+
+
+

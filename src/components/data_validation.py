@@ -13,24 +13,19 @@ class DataValidation:
         self.data_ingestion_artifact = data_ingestion_artifact
         self.data_validation_config = data_validation_config
         self._schema_config = read_yaml_file(file_path=SCHEMA_FILE_PATH)
-
-    def validate_num_of_columns(self, dataframe: DataFrame):
-        status = len(dataframe.columns) == len(self._schema_config['raw_data_schema'])
-        logging.info(f"Is required columns present? {status}")
-        return status
     
     def is_column_exist(self, df:DataFrame):
         dataframe_cols = df.columns
         missing_numerical_cols = []
         missing_categorical_cols = []
-        for col in self._schema_config['numerical_columns']:
+        for col in self._schema_config['raw_data_schema']['numerical_columns']:
             if col not in dataframe_cols:
                 missing_numerical_cols.append(col)
         
         if len(missing_numerical_cols)>0:
             logging.info(f"Missing numerical cols: {missing_numerical_cols}")
 
-        for col in self._schema_config['categorical_columns']:
+        for col in self._schema_config['raw_data_schema']['categorical_columns']:
             if col not in dataframe_cols:
                 missing_categorical_cols.append(col)
         
@@ -47,16 +42,12 @@ class DataValidation:
         validation_error_msg = ""
         logging.info("Data validation is starting")
         df = self.read_data(file_path=self.data_ingestion_artifact.data_file_path)
-        schema = self._schema_config['raw_data_schema']
-
-        status = self.validate_num_of_columns(df)
-        if not status:
-            validation_error_msg += "Columns are missing in the dataframe"
-        else:
-            logging.info(f"All required columns are present in the dataframe: {status}")
-
-
+        
+        df.columns = df.columns.str.strip()
+        if "_id" in df.columns:
+            df = df.drop(columns=["_id"])
         status = self.is_column_exist(df)
+
         if not status:
             validation_error_msg += "Missing required columns. "
         else:

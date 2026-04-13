@@ -1,5 +1,4 @@
 import os
-import sys
 
 from pandas import DataFrame
 from sklearn.model_selection import train_test_split
@@ -29,7 +28,7 @@ class DataIngestion:
         df = self.export_data_into_feature_store()
         logging.info("Got the data from mongodb")
         logging.info("Exited the inititate data ingestion method")
-        data_ingestion_artifact = DataIngestionArtifact(data_file_path=self.data_ingestion_config.data_file_path)
+        data_ingestion_artifact = DataIngestionArtifact(data_file_path=self.data_ingestion_config.feature_store_file_path)
         logging.info(f"Data ingestion artifact: {data_ingestion_artifact}")
         return data_ingestion_artifact
     

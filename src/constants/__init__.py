@@ -7,7 +7,7 @@ COLLECTION_NAME = "Project-1-Data"
 MONGODB_URL_KEY = "MONGODB_URL"
 
 PIPELINE_NAME: str = ""
-ARTIFACT_DIR: str = "artifact"
+ARTIFACT_DIR: str = "artifacts"
 
 MODEL_FILE_NAME = "model.pkl"
 
@@ -27,7 +27,7 @@ REGION_NAME = "us-east-1"
 """
 Data Ingestion related constant start with DATA_INGESTION VAR NAME
 """
-DATA_INGESTION_COLLECTION_NAME: str = "Proj1-Data"
+DATA_INGESTION_COLLECTION_NAME: str = "Project-1-Data"
 DATA_INGESTION_DIR_NAME: str = "data_ingestion"
 DATA_INGESTION_FEATURE_STORE_DIR: str = "feature_store"
 DATA_INGESTION_INGESTED_DIR: str = "ingested"

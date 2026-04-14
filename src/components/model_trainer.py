@@ -15,9 +15,19 @@ class ModelTrainer:
 
     def train_model(self, data: np.array):
         logging.info("Training an Isolation forest.")
-        model = IsolationForest()
+
+        model = IsolationForest(
+            n_estimators=self.model_trainer_config._n_estimators,
+            contamination=self.model_trainer_config._contamination,
+            random_state=self.model_trainer_config._random_state
+        )
         logging.info("Model training going on...")
         model.fit(data)
+        y_pred = model.predict(data)
+        scores = model.decision_function(data)
+        anomaly_ratio = np.mean(y_pred == 1)
+        logging.info(f"Anomaly ratio: {anomaly_ratio:.4f}")
+        logging.info(f"Scores range from {scores.min():.4f} to {scores.max():.4f}")
         return model
     
     def initiate_model_trainer(self):

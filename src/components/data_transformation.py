@@ -35,7 +35,7 @@ class DataTransformation:
         preprocessor = ColumnTransformer([
             ("num", RobustScaler(), num_feats),
             ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_feats)
-        ], remainder="passthrough")
+        ])
 
         pipeline = Pipeline(steps=[("Preprocessor", preprocessor)])
         logging.info("Final Pipeline is Ready")
@@ -82,8 +82,9 @@ class DataTransformation:
         transformed_arr = pipeline.fit_transform(extracted_df)
         logging.info("Transformed the data successfully")
 
-        if hasattr(transformed_arr, "toarray"):
-            transformed_arr = transformed_arr.toarray()
+        
+        transformed_arr = np.array(transformed_arr)
+        logging.info(f"Transformed data's dtype: {transformed_arr.dtype}")
 
         os.makedirs(os.path.dirname(self.data_transformation_config.transformed_file_path),exist_ok=True)
         os.makedirs(os.path.dirname(self.data_transformation_config.transformed_object_file_path), exist_ok=True)

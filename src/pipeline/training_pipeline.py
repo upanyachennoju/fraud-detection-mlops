@@ -2,15 +2,17 @@ from src.logger import logging
 from src.components.data_ingestion import DataIngestion
 from src.components.data_validation import DataValidation
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 
-from src.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
-from src.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact
+from src.entity.config_entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
+from src.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTransformationArtifact, ModelTrainerArtifact
 
 class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config = DataValidationConfig()
         self.data_transformation_config = DataTransformationConfig()
+        self.model_trainer_config = ModelTrainerConfig()
 
     def start_data_ingestion(self):
         logging.info("Entered the data ingestion method of Train Pipeline class")
@@ -36,10 +38,16 @@ class TrainPipeline:
         logging.info("Transformed the data and exited the data transformation method of TrainPipeline class")
         return data_transformation_artifact
     
+    def start_model_training(self, data_transformation_artifact: DataTransformationArtifact):
+        model_trainer = ModelTrainer(data_transformation_artifact=data_transformation_artifact, model_trainer_config=self.model_trainer_config)
+        model_trainer_artifact = model_trainer.initiate_model_trainer()
+        return model_trainer_artifact
+    
     
     def run_pipeline(self):
         logging.info("Starting the train pipeline")
         data_ingestion_artifact = self.start_data_ingestion()
         data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
         data_transformation_artifact = self.start_data_transformation(data_ingestion_artifact=data_ingestion_artifact, data_validation_artifact=data_validation_artifact)
-        return data_transformation_artifact
+        model_trainer_artifact = self.start_model_training(data_transformation_artifact=data_transformation_artifact)
+        return model_trainer_artifact

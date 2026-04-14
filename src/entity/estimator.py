@@ -12,3 +12,4 @@ class MyModel:
         transformed_feature = self.preprocessing_object.transform(dataframe)
         predictions = self.trained_model_object.predict(transformed_feature)
         return predictions
+    

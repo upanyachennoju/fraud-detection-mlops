@@ -14,7 +14,7 @@ class ModelTrainer:
         self.model_trainer_config = model_trainer_config
 
     def train_model(self, data: np.array):
-        logging.info("Training an Isolation forest.")
+        logging.info("Training an Isolation forest.") 
 
         model = IsolationForest(
             n_estimators=self.model_trainer_config._n_estimators,

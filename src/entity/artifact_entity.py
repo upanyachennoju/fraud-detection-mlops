@@ -31,7 +31,10 @@ class ModelTrainerArtifact:
 @dataclass
 class ModelEvaluationArtifact:
     anomaly_ratio: float
-    evaluation_report_path: str
+    score_min: float
+    score_max: float
+    s3_model_path:str 
+    trained_model_path:str
 
 
 # 6. Model Pusher
